@@ -1,24 +1,44 @@
 <template>
   <div class="footer-container">
-    <!-- 左侧的全选 -->
+    <!-- 左侧的全选 Left select all checkbox-->
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="cbFull" :checked="true" />
-      <label class="custom-control-label" for="cbFull">全选</label>
+      <input type="checkbox" class="custom-control-input" id="cbFull" :checked="fullState" @change='fullChange'/>
+      <label class="custom-control-label" for="cbFull">Select All</label>
     </div>
 
-    <!-- 中间的合计 -->
+    <!-- 中间的合计 total price in the middle-->
     <div>
-      <span>合计：</span>
-      <span class="total-price">￥{{ 0 }}</span>
+      <span>Total：</span>
+      <span class="total-price">￥{{ totalAmt.toFixed(2) }}</span>
     </div>
 
-    <!-- 结算按钮 -->
-    <button type="button" class="btn btn-primary btn-settle">结算（{{ 0 }}）</button>
+    <!-- 结算按钮 Checkout-->
+    <button type="button" class="btn btn-primary btn-settle">Checkout({{ allCount }})</button>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    fullChange(e) {
+      this.$emit('full-change', e.target.checked)
+    }
+  },
+  props: {
+    fullState: {
+      type: Boolean,
+      default: false
+    },
+    totalAmt: {
+      type: Number,
+      default:0
+    },
+    allCount: {
+      type: Number,
+      default:0
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

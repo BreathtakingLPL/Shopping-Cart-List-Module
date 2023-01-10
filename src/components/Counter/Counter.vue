@@ -1,16 +1,43 @@
 <template>
   <div class="number-container d-flex justify-content-center align-items-center">
-    <!-- 减 1 的按钮 -->
-    <button type="button" class="btn btn-light btn-sm">-</button>
-    <!-- 购买的数量 -->
-    <span class="number-box">1</span>
-    <!-- 加 1 的按钮 -->
-    <button type="button" class="btn btn-light btn-sm">+</button>
+    <!-- 减 1 的按钮 subtract 1 button-->
+    <button type="button" class="btn btn-light btn-sm" @click='sub'>-</button>
+    <!-- 购买的数量 amouont of goods-->
+    <span class="number-box">{{num}}</span>
+    <!-- 加 1 的按钮  plus 1 button-->
+    <button type="button" class="btn btn-light btn-sm" @click='add'>+</button>
   </div>
 </template>
 
 <script>
-export default {}
+// import bus
+import bus from '@/components/eventBus.js'
+
+export default {
+  methods: {
+    add() {
+      const countObj = {id:this.id, value: this.num + 1}
+      bus.$emit('share', countObj)
+    },
+    sub() {
+      if (this.num -1 === 0) return
+      const countObj = {id:this.id, value: this.num - 1}
+      bus.$emit('share', countObj)
+    }
+  },
+  props: {
+    // reveive specific goods id
+    id: {
+      type: Number,
+      required:true
+    },
+    // receive amount from Goods
+    num: {
+      type: Number,
+      default:1
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
